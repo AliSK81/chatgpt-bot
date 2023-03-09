@@ -43,7 +43,7 @@ async def ask(client: Client, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
 
     try:
-        ai_response = chat.send_msg(message.text)
+        ai_response = await chat.send(message.text)
         await message.reply_text(text=ai_response)
 
     except RateLimitError:
