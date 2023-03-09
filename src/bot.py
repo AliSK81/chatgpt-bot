@@ -1,4 +1,4 @@
-from openai.error import RateLimitError, InvalidRequestError
+from openai.error import *
 from pyrogram import Client, filters
 from pyrogram.enums import ChatAction
 from pyrogram.types import Message
@@ -48,5 +48,7 @@ async def ask(client: Client, message: Message):
 
     except RateLimitError:
         await message.reply_text(RATE_LIMIT_ERR)
-    except InvalidRequestError:
-        chat.reset()
+
+    except InvalidRequestError as e:
+        await message.reply_text(UNKNOWN_ERR)
+        raise e
