@@ -2,7 +2,7 @@ from typing import Dict
 
 from openai.error import *
 from pyrogram import Client, filters
-from pyrogram.enums import ChatAction
+from pyrogram.enums import ChatAction, ParseMode
 from pyrogram.types import Message
 
 from chatai import ChatAI
@@ -47,7 +47,7 @@ class ChatClient:
 
         try:
             response = await chatai.send_message(message.text)
-            await message.reply_text(text=response)
+            await message.reply_text(text=response, parse_mode=ParseMode.MARKDOWN)
 
         except RateLimitError:
             await message.reply_text(RATE_LIMIT_ERR)
