@@ -12,13 +12,20 @@ from dictionary import *
 class ChatClient:
 
     def __init__(self, app_name: str, api_id: str, api_hash: str, bot_token: str, proxy: dict):
+        self.chats: Dict[int, ChatAI] = {}
+
         self.app = Client(name=app_name,
                           api_id=api_id,
                           api_hash=api_hash,
                           bot_token=bot_token,
                           proxy=proxy)
 
-        self.chats: Dict[int, ChatAI] = {}
+        self.__add_handlers()
+
+    def __add_handlers(self):
+        self.app.on_message(filters.command('start') & filters.private)(self.__handle_start_message)
+        self.app.on_message(filters.command('reset') & filters.private)(self.__handle_reset_message)
+        self.app.on_message(filters.text & filters.private)(self.__handle_ask_message)
 
     @staticmethod
     async def __handle_start_message(client, message):
@@ -55,8 +62,4 @@ class ChatClient:
         return self.chats[user_id]
 
     def run(self):
-        self.app.on_message(filters.command('start') & filters.private)(self.__handle_start_message)
-        self.app.on_message(filters.command('reset') & filters.private)(self.__handle_reset_message)
-        self.app.on_message(filters.text & filters.private)(self.__handle_ask_message)
-
         self.app.run()
