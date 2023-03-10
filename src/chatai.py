@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import openai
 
 from config import *
+from dictionary import SYSTEM_CONTEXT
 
 
 class ChatAI:
@@ -14,6 +15,7 @@ class ChatAI:
         self.__messages = deque(maxlen=MAX_MESSAGES)
         self.__thread_pool = ThreadPoolExecutor(max_workers=MAX_WORKERS)
         self.__loop = asyncio.get_event_loop()
+        self.__add_message(role='system', content=SYSTEM_CONTEXT)
 
     async def send_message(self, message: str):
         """
@@ -43,3 +45,4 @@ class ChatAI:
         Clear chat history.
         """
         self.__messages.clear()
+        self.__add_message(role='system', content=SYSTEM_CONTEXT)
