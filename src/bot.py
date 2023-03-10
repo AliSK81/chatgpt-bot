@@ -21,8 +21,8 @@ class ChatClient:
         self.chats: Dict[int, ChatAI] = {}
 
     @staticmethod
-    def __handle_start_message(client, message):
-        message.reply_text(text=START_MSG)
+    async def __handle_start_message(client, message):
+        await message.reply_text(text=START_MSG)
 
     async def __handle_reset_message(self, client, message):
         user_data = self.chats.get(message.from_user.id)
