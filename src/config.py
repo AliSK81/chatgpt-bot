@@ -4,7 +4,7 @@ API_HASH = ''
 BOT_TOKEN = ''
 API_KEY = ''
 AI_MODEL = 'gpt-3.5-turbo'
-MAX_MESSAGES = 15
+MAX_MESSAGES = 10
 MAX_WORKERS = 4
 
 use_proxy = False
